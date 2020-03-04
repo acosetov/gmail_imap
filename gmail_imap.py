@@ -24,7 +24,7 @@ def read_email():
     m = imaplib.IMAP4_SSL("imap.gmail.com", 993)
     m.login(config.account_email,config.account_passw)
     # grab all emails, if you need just inbox use like this m.select('INBOX')
-    m.select('"[Gmail]/All Mail"')
+    m.select('INBOX')
 
     status, data = m.uid('search', None, "ALL")
     for num in data[0].split():
@@ -69,7 +69,7 @@ def read_email():
 messages = []
 read_email()
 
-with open('mails.csv', mode='w') as mail_file:
+with open('sent_folder.csv', mode='w') as mail_file:
     mail_writer = csv.writer(mail_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     for message in messages:
